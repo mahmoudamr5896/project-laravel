@@ -6,8 +6,9 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Hello User') }}</div>
+                @if($user)
                 <h1>Welcome, {{ $user->name }}!</h1>
-
+               @endif
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
