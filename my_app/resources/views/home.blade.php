@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<!-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Hello User') }}</div>
                 @if($user)
-                <h1>Welcome, {{ $user->name }}!</h1>
-               @endif
+                    <h1>Welcome, {{ $user->name }}!</h1>
+                @endif
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -21,26 +21,33 @@
             </div>
         </div>
     </div>
-</div>
-<nav class="navbar navbar-expand-sm navbar-dark">
-    <img src="https://i.imgur.com/CFpa3nK.jpg" width="20" height="20" class="d-inline-block align-top rounded-circle" alt=""> 
-    <a class="navbar-brand ml-2" href="#" data-abc="true">Rib Simpson</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation"> 
-        <span class="navbar-toggler-icon"></span> 
-    </button>
-    <div class="end">
-        <div class="collapse navbar-collapse" id="navbarColor02">
-            <ul class="navbar-nav">
-                <li class="nav-item"> <a class="nav-link" href="#" data-abc="true">Work</a> </li>
-                <li class="nav-item"> <a class="nav-link" href="#" data-abc="true">Capabilities</a> </li>
-                <li class="nav-item "> <a class="nav-link" href="#" data-abc="true">Articles</a> </li>
-                <li class="nav-item active"> <a class="nav-link mt-2" href="#" data-abc="true" id="clicked">Contact<span class="sr-only">(current)</span></a> </li>
-            </ul>        
+</div> -->
+
+<!-- Post Create Form -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="post-box p-4 bg-white rounded shadow-sm">
+                <form action="{{ route('posts.store') }}" method="POST">
+                    @csrf
+                    <input type="text" class="form-control"name='description' id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                    <textarea name="title" class="form-control mb-3 p-3" rows="3" placeholder="Write something..."></textarea>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <div class="d-flex gap-3">
+                            <button type="button" class="btn btn-light"><i class="fas fa-video text-danger"></i> Live</button>
+                            <button type="button" class="btn btn-light"><i class="fas fa-image text-success"></i> Photo</button>
+                            <button type="button" class="btn btn-light"><i class="fas fa-smile text-warning"></i> Recommend</button>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>    
-</nav>
-<!-- Main Body -->
-<section>
+    </div>
+</div>
+
+<!-- Posts Section -->
+<section class="mt-5">
     <div class="container">
         <div class="row">
             <div class="col-sm-5 col-md-6 col-12 pb-4">
@@ -48,41 +55,22 @@
                 @foreach ($posts as $post)
                 <div class="comment mt-4 text-justify float-left">
                     <img src="https://i.imgur.com/yTFUilP.jpg" alt="" class="rounded-circle" width="40" height="40">
-                    <h4>{{$post['posted_by']}}</h4>
-                    <span>{{$post['created_at']}}</span>
+                    <h4>{{ $post['posted_by'] }}</h4>
+                    <span>{{ $post['created_at'] }}</span>
                     <br>
-                    <h6>Header: {{$post['title']}}</h6>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
+                    <h6>Header: {{ $post['title'] }}</h6>
+                    <p>{{ $post['description'] }}</p>
                 </div>
                 @endforeach
-                <!-- <div class="text-justify darker mt-4 float-right">
-                    <img src="https://i.imgur.com/CFpa3nK.jpg" alt="" class="rounded-circle" width="40" height="40">
-                    <h4>Rob Simpson</h4>
-                    <span>- 20 October, 2018</span>
-                    <br>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
-                </div>
-                <div class="comment mt-4 text-justify">
-                    <img src="https://i.imgur.com/yTFUilP.jpg" alt="" class="rounded-circle" width="40" height="40">
-                    <h4>Jhon Doe</h4>
-                    <span>- 20 October, 2018</span>
-                    <br>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
-                </div>
-                <div class="darker mt-4 text-justify">
-                    <img src="https://i.imgur.com/CFpa3nK.jpg" alt="" class="rounded-circle" width="40" height="40">
-                    <h4>Rob Simpson</h4>
-                    <span>- 20 October, 2018</span>
-                    <br>
-                    <p >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
-                </div> -->
             </div>
+
+            <!-- Comment Section -->
             <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
                 <form id="algin-form">
                     <div class="form-group">
-                        <h4>Leave a comment</h4>
+                        <h4>Send feedback</h4>
                         <label for="message">Message</label>
-                        <textarea name="msg" id=""msg cols="30" rows="5" class="form-control" style="background-color: black;"></textarea>
+                        <textarea name="msg" id="msg" cols="30" rows="5" class="form-control" style="background-color: black;"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -97,10 +85,10 @@
                     </div>
                     <div class="form-inline">
                         <input type="checkbox" name="check" id="checkbx" class="mr-1">
-                        <label for="subscribe">Subscribe me to the newlettter</label>
+                        <label for="subscribe">Subscribe me to the newsletter</label>
                     </div>
                     <div class="form-group">
-                        <button type="button" id="post" class="btn">Post Comment</button>
+                        <button type="button" id="post" class="btn btn-primary">Post Comment</button>
                     </div>
                 </form>
             </div>
