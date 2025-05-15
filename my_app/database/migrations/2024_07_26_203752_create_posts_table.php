@@ -13,11 +13,18 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->text('text_content')->nullable();  // post message
+            $table->string('media_url')->nullable();   // image/video
+            $table->enum('post_type', ['text', 'image', 'video'])->default('text');
+            $table->enum('visibility', ['public', 'friends', 'private'])->default('public');
+            $table->unsignedBigInteger('likes_count')->default(0);
+            $table->unsignedBigInteger('comments_count')->default(0);
             $table->timestamps();
         });
+        
     }
+
     /**
      * Reverse the migrations.
      */

@@ -23,7 +23,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 
-// Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Route::get('/email/verify', function () {
 //     return view('auth.verify-email');
@@ -59,6 +59,8 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/posts',action:[Postscontroller::class ,'index'])->name('posts.index');;
 Route::get('/user/{id}',action:[Postscontroller::class ,'show'])->name('posts.show');
 Route::post('/store',action:[Postscontroller::class ,'store'])->name('posts.store');
+// Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
     // Route::get('/posts', [HomeController::class, 'index'])->name('home');
     Route::get('/posts/{post}/edit', [Postscontroller::class, 'edit'])->name('posts.edit');
 
@@ -66,3 +68,23 @@ Route::post('/store',action:[Postscontroller::class ,'store'])->name('posts.stor
     Route::delete('/posts/{post}', [Postscontroller::class, 'destroy'])->name('posts.destroy');
 
 Route::get('/create',action:[Postscontroller::class ,'create'])->name('posts.create');
+use App\Http\Controllers\CommentController;
+
+Route::get('/posts/{post}/comments', [CommentController::class, 'showPostComments'])->name('posts.comments');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+use App\Http\Controllers\ProfileController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
+use App\Http\Controllers\StoryController;
+
+Route::resource('stories', StoryController::class);
+Route::middleware('auth')->resource('posts', Postscontroller::class);
+
+Route::middleware('auth')->post('/posts', [Postscontroller::class, 'store']);

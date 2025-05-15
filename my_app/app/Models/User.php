@@ -24,10 +24,20 @@ class User  extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'first_name', 'last_name', 'email', 'password',
+        'birth_date', 'gender', 'profile_image', 'cover_image', 'friends'
     ];
+    
+    protected $casts = [
+        'friends' => 'array',
+    ];
+    
+    
+// In User.php model
+public function posts()
+{
+    return $this->hasMany(Post::class);
+}
 
     /**
      * The attributes that should be hidden for serialization.
@@ -38,7 +48,8 @@ class User  extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
-
+   
+    
     /**
      * Get the attributes that should be cast.
      *

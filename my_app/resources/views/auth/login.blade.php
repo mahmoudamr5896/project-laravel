@@ -1,80 +1,119 @@
-
 @extends('layouts.auth')
 
 @section('content')
 <style>
     body {
-        background-color: #f2ede9;
+        background-color: #f0f2f5;
         font-family: 'Segoe UI', sans-serif;
     }
 
-    .login-container {
-        max-width: 500px;
-        margin: 50px auto;
-        background: linear-gradient(150deg, #f5c28b, #d774a4, #6b3f7c);
-        padding: 80px 70px;
-        border-radius: 25px;
-        color: white;
-        position: relative;
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
     }
 
-    .login-container h2 {
-        font-size: 26px;
-        margin-bottom: 30px;
+    .left-section {
+        flex: 1;
+        padding: 50px;
+    }
+
+    .left-section h1 {
+        color: #1877f2;
+        font-size: 56px;
+        margin-bottom: 20px;
+    }
+
+    .left-section p {
+        font-size: 24px;
+        color: #1c1e21;
+    }
+
+    .right-section {
+        flex: 1;
+        max-width: 400px;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     .form-control {
-        background: transparent;
-        border: none;
-        border-bottom: 1px solid white;
-        border-radius: 0;
-        color: white;
-        margin-bottom: 25px;
-    }
-
-    .form-control:focus {
-        background: transparent;
-        color: white;
-        box-shadow: none;
+        margin-bottom: 15px;
     }
 
     .btn-login {
-        background-color: white;
-        color: #6b3f7c;
-        border-radius: 50%;
-        padding: 10px 15px;
-        font-size: 18px;
-        border: none;
-        float: right;
-    }
-
-    .login-links {
-        margin-top: 30px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .login-links a {
+        width: 100%;
+        background-color: #1877f2;
         color: white;
-        text-decoration: underline;
-        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        padding: 10px;
+        font-size: 18px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+    }
+
+    .btn-create {
+        width: 100%;
+        background-color: #42b72a;
+        color: white;
+        font-weight: bold;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 6px;
+    }
+
+    .forgot-link {
+        display: block;
+        text-align: center;
+        margin-bottom: 15px;
+        color: #1877f2;
+        text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+        }
+
+        .left-section {
+            text-align: center;
+        }
+
+        .right-section {
+            margin-top: 20px;
+        }
     }
 </style>
 
-<div class="login-container">
-    <h2>Welcome Back</h2>
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+<div class="container">
+    <!-- Left Section -->
+    <div class="left-section">
+        <h1>facebook</h1>
+        <p>Connect with friends and the world around you on Facebook.</p>
+    </div>
 
-        <input type="email" name="email" class="form-control" placeholder="Email" required>
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
+    <!-- Right Section: Login Form -->
+    <div class="right-section">
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
 
-        <button type="submit" class="btn-login">→</button>
-    </form>
+            <input type="email" name="email" class="form-control form-control-lg" placeholder="Email or phone number" required>
+            <input type="password" name="password" class="form-control form-control-lg" placeholder="Password" required>
 
-    <div class="login-links">
-        <a href="{{ route('register') }}">Sign up</a>
-        <a href="">Forgot Password</a>
+            <button type="submit" class="btn-login">Login</button>
+
+            <a href="#" class="forgot-link">Forgot password?</a>
+
+            <hr>
+
+            <a href="{{ route('register') }}">
+                <button type="button" class="btn-create">Create new account</button>
+            </a>
+        </form>
     </div>
 </div>
 @endsection

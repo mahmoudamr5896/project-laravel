@@ -3,77 +3,169 @@
 @section('content')
 <style>
     body {
-        background-color: #f2ede9;
+        background-color: #f0f2f5;
         font-family: 'Segoe UI', sans-serif;
     }
 
-    .register-container {
-        max-width: 400px;
-        margin: 50px auto;
-        background: linear-gradient(150deg, #f5c28b, #d774a4, #6b3f7c);
-        padding: 40px 30px;
-        border-radius: 25px;
-        color: white;
-        position: relative;
+    .register-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        min-height: 100vh;
+        padding: 20px;
     }
 
-    .register-container h2 {
-        font-size: 24px;
-        margin-bottom: 30px;
-    }
-
-    .form-control {
-        background: transparent;
-        border: none;
-        border-bottom: 1px solid white;
-        border-radius: 0;
-        color: white;
+    .fb-logo {
+        font-size: 48px;
+        font-weight: bold;
+        color: #1877f2;
         margin-bottom: 20px;
     }
 
-    .form-control:focus {
-        background: transparent;
-        color: white;
-        box-shadow: none;
-    }
-
-    .btn-register {
+    .register-card {
         background-color: white;
-        color: #6b3f7c;
-        border-radius: 50%;
-        padding: 10px 15px;
-        font-size: 18px;
-        border: none;
-        float: right;
+        width: 100%;
+        max-width: 430px;
+        padding: 20px 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     }
 
-    .login-links {
-        margin-top: 30px;
+    .register-card h2 {
+        font-size: 24px;
+        font-weight: 600;
         text-align: center;
+        margin-bottom: 5px;
     }
 
-    .login-links a {
-        color: white;
-        text-decoration: underline;
+    .register-card p {
         font-size: 14px;
+        text-align: center;
+        color: #606770;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        margin-bottom: 12px;
+    }
+
+    .name-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .dob-group,
+    .gender-group {
+        margin-bottom: 12px;
+    }
+
+    .gender-group label {
+        margin-right: 10px;
+        font-weight: 500;
+    }
+
+    .form-check-inline {
+        margin-right: 15px;
+    }
+
+    .btn-signup {
+        width: 100%;
+        background-color: #42b72a;
+        color: white;
+        font-weight: bold;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        margin-top: 10px;
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .login-link a {
+        color: #1877f2;
+        font-size: 14px;
+        text-decoration: none;
     }
 </style>
 
-<div class="register-container">
-    <h2>Create Account</h2>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+<div class="register-wrapper">
+    <div class="fb-logo">facebook</div>
 
-        <input type="text" name="name" class="form-control" placeholder="Full Name" required>
-        <input type="email" name="email" class="form-control" placeholder="Email" required>
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
-        <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required>
+    <div class="register-card">
+        <h2>Create a new account</h2>
+        <p>It's quick and easy.</p>
 
-        <button type="submit" class="btn-register">→</button>
-    </form>
+        <form method="POST" action="{{ route('register') }}">
+    @csrf
 
-    <div class="login-links">
-        <a href="{{ route('login') }}">Already have an account? Login</a>
+    <div class="name-group">
+        <input type="text" name="first_name" class="form-control" placeholder="First name" required>
+        <input type="text" name="last_name" class="form-control" placeholder="Surname" required>
     </div>
+
+    <div class="dob-group">
+        <label>Date of birth</label>
+        <div class="d-flex gap-2">
+            <select name="birth_day" class="form-control" required>
+                @for($i=1;$i<=31;$i++)
+                    <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
+            </select>
+            <select name="birth_month" class="form-control" required>
+                @foreach(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] as $i => $month)
+                    <option value="{{ $i+1 }}">{{ $month }}</option>
+                @endforeach
+            </select>
+            <select name="birth_year" class="form-control" required>
+                @for($i = now()->year; $i >= 1900; $i--)
+                    <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
+            </select>
+        </div>
+    </div>
+
+    <div class="gender-group">
+        <label>Gender</label><br>
+        <div class="form-check form-check-inline">
+            <input type="radio" name="gender" value="female" class="form-check-input" required>
+            <label class="form-check-label">Female</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" name="gender" value="male" class="form-check-input" required>
+            <label class="form-check-label">Male</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" name="gender" value="custom" class="form-check-input" required>
+            <label class="form-check-label">Custom</label>
+        </div>
+    </div>
+
+    <input type="email" name="email" class="form-control" placeholder="Mobile number or email address" required>
+    <input type="password" name="password" class="form-control" placeholder="New password" required>
+    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm password" required>
+
+    <button type="submit" class="btn-signup">Sign Up</button>
+</form>
+
+
+        <div class="login-link">
+            <a href="{{ route('login') }}">Already have an account?</a>
+        </div>
+    </div>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 </div>
 @endsection
