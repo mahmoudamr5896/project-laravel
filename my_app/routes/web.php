@@ -66,8 +66,8 @@ Route::post('/store',action:[Postscontroller::class ,'store'])->name('posts.stor
 
     Route::put('/posts/{post}', [Postscontroller::class, 'update'])->name('posts.update');
     Route::delete('/posts/{post}', [Postscontroller::class, 'destroy'])->name('posts.destroy');
+// Route::get('/create',action:[Postscontroller::class ,'create'])->name('posts.create');
 
-Route::get('/create',action:[Postscontroller::class ,'create'])->name('posts.create');
 use App\Http\Controllers\CommentController;
 
 Route::get('/posts/{post}/comments', [CommentController::class, 'showPostComments'])->name('posts.comments');
